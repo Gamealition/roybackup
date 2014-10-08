@@ -1,0 +1,47 @@
+#!/bin/sh
+# System backup script by Roy Curtis
+
+# #########
+# CONFIGURATION:
+# #########
+
+BACKUPTARGET=/
+BACKUPDIR=/home/backups
+BACKUPNAME=sys
+EXCLUDE=/usr/local/etc/sysbackup.exclude
+
+# #########
+# CONSTANTS:
+# #########
+
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+RED="\033[0;31m"
+PURPLE="\033[0;35m"
+BLUE="\033[0;36m"
+CRESET="\033[0m"
+
+# #########
+# SCRIPT:
+# #########
+
+if [[ $EUID -ne 0 ]]; then
+   echo -e "[${RED}ERROR${CRESET}] Please run this script as root/sudo."
+   exit 1
+fi
+
+
+echo -e "*** Calculating backup size..."
+
+SIZE=`du -sm --exclude-from=$EXCLUDE $BACKUPTARGET 2> /dev/null | cut -f 1`
+TIMESTAMP=`date +%H%M-%d-%m-%Y`
+BACKUPPATH=${BACKUPDIR}/${BACKUPNAME}-$TIMESTAMP.tar.bz
+
+echo -e "*** Performing ${BLUE}${SIZE}MB${CRESET} ${BACKUPTARGET} backup to ${BLUE}${BACKUPPATH}${CRESET}..."
+if [ "$1" != "--dry" ]
+then
+    tar \
+        --exclude-from=$EXCLUDE \
+        -cf - $BACKUPTARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
+fi
+echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
+

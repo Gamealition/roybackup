@@ -1,0 +1,46 @@
+#!/bin/sh
+# Home (or /srv/) backup script by Roy Curtis
+
+# #########
+# CONFIGURATION:
+# #########
+
+BACKUPTARGET=/home/
+BACKUPDIR=/home/backups
+BACKUPNAME=home
+EXCLUDE=/usr/local/etc/homebackup.exclude
+
+# #########
+# CONSTANTS:
+# #########
+
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+RED="\033[0;31m"
+PURPLE="\033[0;35m"
+BLUE="\033[0;36m"
+CRESET="\033[0m"
+
+# #########
+# SCRIPT:
+# #########
+
+if [[ $EUID -ne 0 ]]; then
+   echo -e "[${RED}ERROR${CRESET}] Please run this script as root/sudo."
+   exit 1
+fi
+
+echo -e "[${RED}WARNING${CRESET}] This only backs up the ${BACKUPTARGET} directory. Use sysbackup for system."
+echo -e "*** Calculating backup size..."
+
+SIZE=`du -sm --exclude-from=$EXCLUDE $BACKUPTARGET 2> /dev/null | cut -f 1`
+TIMESTAMP=`date +%H%M-%d-%m-%Y`
+BACKUPPATH=${BACKUPDIR}/${BACKUPNAME}-${TIMESTAMP}.tar.bz
+
+echo -e "*** Performing ${BLUE}${SIZE}MB${CRESET} ${BACKUPTARGET} backup to ${BLUE}${BACKUPPATH}${CRESET}..."
+if [ "$1" != "--dry" ]
+then
+	tar \
+	    --exclude-from=$EXCLUDE \
+	    -cf - $BACKUPTARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
+fi
+echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
