@@ -2,9 +2,10 @@ This is a simple backup script for a few servers I have administered. Originally
 
 # Installation
 
-1. Clone this repository into any directory
-2. Check the `*.exclude` files and ensure the patterns are not excluding anything you want
-3. `chmod +x roybackup`
+1. `apt-get install tar pv bzip2 coreutils` or distrobution equivalent
+2. Clone this repository into any directory
+3. Check the `*.exclude` files and ensure the patterns are not excluding anything you want
+4. `chmod +x roybackup`
 
 # Usage
 
@@ -39,6 +40,8 @@ The `home` target is for user files which may be gigabytes to terabytes larger t
 
 * Minecraft Dynmap tiles
 * Source engine maps and packages
+
+***Note that some servers, by convention, store this kind of data under different directories (e.g. /srv).***
 
 # Exclusions
 
