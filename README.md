@@ -1,4 +1,4 @@
-This is a simple backup script for a few servers I have administered. Originally two files, it is now combined into one that uses "targets" to decide what to backup. Each target uses an exclusion file.
+This is a simple backup script for a few servers I have administered. Originally two files, it is now combined into one that uses "targets" to decide what to backup. Some target uses an exclusion file.
 
 # Installation
 
@@ -16,6 +16,9 @@ roybackup sys
 # For home directory/user data backups
 roybackup home
 
+# For MySQL data backups
+roybackup mysql
+
 # To check the size and destination of the backup without doing any actual backing up
 roybackup --dry sys
 roybackup --dry home
@@ -27,6 +30,8 @@ roybackup --dry home
 0  3 */3 * * /home/user/roybackup sys
 # Every three days at 3:15 AM
 15 3 */3 * * /home/user/roybackup home
+# Every day at 3:30 AM
+30 3 * * * /home/user/roybackup mysql
 ```
 
 # Targets
@@ -42,6 +47,9 @@ The `home` target is for user files which may be gigabytes to terabytes larger t
 * Source engine maps and packages
 
 ***Note that some servers, by convention, store this kind of data under different directories (e.g. /srv).***
+
+## `mysql`
+This uses `mysqldump` to take and gzip a dump of all MySQL databases on the system's installation. This target requires the use of a `.cnf` file that has the password for the MySQL user `root`, in order to perform the dumps. See http://dev.mysql.com/doc/refman/5.1/en/password-security-user.html for more information.
 
 # Exclusions
 

@@ -19,6 +19,10 @@ SYS_TARGET=/
 SYS_NAME=sys
 SYS_EXCLUDE=sysbackup.exclude
 
+# MySQL target
+MYSQL_NAME=mysql
+MYSQL_CNF=/root/.my.cnf
+
 # #########
 # CONSTANTS:
 # #########
@@ -40,33 +44,53 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+function fileBackup
+{
+  echo -e "*** Calculating backup size..."
+
+  SIZE=`du -sm --exclude-from=$EXCLUDE $TARGET 2> /dev/null | cut -f 1`
+  TIMESTAMP=`date +%H%M-%d-%m-%Y`
+  BACKUPPATH=${BACKUPDIR}/${NAME}-${TIMESTAMP}.tar.bz
+
+  echo -e "*** Performing ${BLUE}${SIZE}MB${CRESET} ${TARGET} backup to ${BLUE}${BACKUPPATH}${CRESET}..."
+  if [ "$1" != "--dry" ]
+  then
+      tar \
+          --exclude-from=$EXCLUDE \
+          -cf - $TARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
+  fi
+  echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
+}
+
+function sqlBackup
+{
+  TIMESTAMP=`date +%H%M-%d-%m-%Y`
+  BACKUPPATH=${BACKUPDIR}/${NAME}-${TIMESTAMP}.tar.bz
+
+  echo -e "*** Performing MySQL backup to ${BLUE}${BACKUPPATH}${CRESET}..."
+  mysqldump --defaults-file="$MYSQL_CNF" -u root --all-databases | gzip > $BACKUPPATH
+  echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
+}
+
 case "${@: -1}" in
 	home)
 	    TARGET=$HOME_TARGET
 	    NAME=$HOME_NAME
 	    EXCLUDE=$HOME_EXCLUDE
+      fileBackup
 	    ;;
 	sys)
 	    TARGET=$SYS_TARGET
 	    NAME=$SYS_NAME
 	    EXCLUDE=$SYS_EXCLUDE
+      fileBackup
 	    ;;
+  mysql)
+      NAME=$MYSQL_NAME
+      TARGET=$MYSQL_CNF
+      sqlBackup
+      ;;
 	*)
-	    echo -e "[${BLUE}USAGE${CRESET}] roybackup [--dry] home|sys"
+	    echo -e "[${BLUE}USAGE${CRESET}] roybackup ([--dry] home|sys)|mysql"
 	    exit 1
 esac
-
-echo -e "*** Calculating backup size..."
-
-SIZE=`du -sm --exclude-from=$EXCLUDE $TARGET 2> /dev/null | cut -f 1`
-TIMESTAMP=`date +%H%M-%d-%m-%Y`
-BACKUPPATH=${BACKUPDIR}/${NAME}-${TIMESTAMP}.tar.bz
-
-echo -e "*** Performing ${BLUE}${SIZE}MB${CRESET} ${TARGET} backup to ${BLUE}${BACKUPPATH}${CRESET}..."
-if [ "$1" != "--dry" ]
-then
-    tar \
-        --exclude-from=$EXCLUDE \
-        -cf - $TARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
-fi
-echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
