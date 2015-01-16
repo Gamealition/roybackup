@@ -13,6 +13,7 @@
 /proc
 /run
 /sys
+/sbin
 /tmp
 /usr/bin
 /usr/include
