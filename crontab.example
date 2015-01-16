@@ -25,6 +25,10 @@ ROYBACKUP="/usr/local/roybackup"
 38 4 */7 * * ${ROYBACKUP}/home.sh sysuser
 40 4 */3 * * ${ROYBACKUP}/home.sh www-data
 
+# Minecraft backups
+0  5 * * * ${ROYBACKUP}/minecraft.sh Survival
+10 5 * * * ${ROYBACKUP}/minecraft.sh Creative
+20 5 * * * ${ROYBACKUP}/minecraft.sh Direwolf20
 
 # rsync backups to off-site server
 0 7 * * * rsync -aPvu /home/backups/ remote@backupserver.com:~/myserverbackups/

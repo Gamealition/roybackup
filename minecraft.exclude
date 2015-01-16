@@ -4,6 +4,7 @@
 
 *.bsp
 *.vpk
+world-*.zip
 
 */*-backup/*
 */*-backups/*
