@@ -39,6 +39,6 @@
 */Log/*
 */logs/*
 */Logs/*
-*/node-modules/*
+*/node_modules/*
 */temp/*
 */tmp/*
