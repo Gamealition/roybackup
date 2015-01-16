@@ -19,6 +19,7 @@
 /usr/lib
 /usr/sbin
 /usr/share
+/var/lib/mysql
 
 *.log
 *.log.*
