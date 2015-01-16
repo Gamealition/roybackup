@@ -55,9 +55,9 @@ function fileBackup
   echo -e "*** Performing ${BLUE}${SIZE}MB${CRESET} ${TARGET} backup to ${BLUE}${BACKUPPATH}${CRESET}..."
   if [ "$1" != "--dry" ]
   then
-      tar \
-          --exclude-from=$EXCLUDE \
-          -cf - $TARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
+    tar \
+      --exclude-from=$EXCLUDE \
+      -cf - $TARGET | pv -p -e -r -b -s ${SIZE}m | bzip2 -c > $BACKUPPATH
   fi
   echo -e "*** Finished backup to ${BLUE}${BACKUPPATH}${CRESET}"
 }
@@ -74,23 +74,23 @@ function sqlBackup
 
 case "${@: -1}" in
 	home)
-	    TARGET=$HOME_TARGET
-	    NAME=$HOME_NAME
-	    EXCLUDE=$HOME_EXCLUDE
-      fileBackup
-	    ;;
+    TARGET=$HOME_TARGET
+    NAME=$HOME_NAME
+    EXCLUDE=$HOME_EXCLUDE
+    fileBackup
+    ;;
 	sys)
-	    TARGET=$SYS_TARGET
-	    NAME=$SYS_NAME
-	    EXCLUDE=$SYS_EXCLUDE
-      fileBackup
-	    ;;
+    TARGET=$SYS_TARGET
+    NAME=$SYS_NAME
+    EXCLUDE=$SYS_EXCLUDE
+    fileBackup
+    ;;
   mysql)
-      NAME=$MYSQL_NAME
-      TARGET=$MYSQL_CNF
-      sqlBackup
-      ;;
+    NAME=$MYSQL_NAME
+    TARGET=$MYSQL_CNF
+    sqlBackup
+    ;;
 	*)
-	    echo -e "[${BLUE}USAGE${CRESET}] roybackup ([--dry] home|sys)|mysql"
-	    exit 1
+    echo -e "[${BLUE}USAGE${CRESET}] roybackup ([--dry] home|sys)|mysql"
+    exit 1
 esac
