@@ -15,7 +15,7 @@ cd $DIR
 # SCRIPT:
 echo -e "[MINECRAFT] Calculating backup size..."
 
-SIZE=`du -sm --exclude-from=$EXCLUDE /home/$1 2> /dev/null | cut -f 1`
+SIZE=`du -sm --exclude-from=$EXCLUDE /home/minecraft/$1 2> /dev/null | cut -f 1`
 TIMESTAMP=`date +%H%M-%d-%m-%Y`
 BACKUPPATH=${BACKUPDIR}/$1-${TIMESTAMP}.tar.bz
 
