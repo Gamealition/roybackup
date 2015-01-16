@@ -20,6 +20,7 @@
 /usr/sbin
 /usr/share
 /var/lib/mysql
+var/lib/apt
 
 *.log
 *.log.*
