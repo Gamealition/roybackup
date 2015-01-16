@@ -1,0 +1,21 @@
+# Example crontab for using roybackup scripts with
+# Disable annoying mail
+MAILTO=""
+# Path to roybackup repo
+ROYBACKUP="/usr/local/roybackup"
+
+# MySQL backups
+0  4 *   * * ${ROYBACKUP}/mysql.sh forums
+1  4 *   * * ${ROYBACKUP}/mysql.sh information_schema
+2  4 *   * * ${ROYBACKUP}/mysql.sh minecraft
+3  4 *   * * ${ROYBACKUP}/mysql.sh minecraft_creative
+4  4 *   * * ${ROYBACKUP}/mysql.sh performance_schema
+# PRISM databases are huge; do these every four days
+5  4 */4 * * ${ROYBACKUP}/mysql.sh prism
+10 4 */4 * * ${ROYBACKUP}/mysql.sh prism_creative
+
+# rsync backups to off-site server
+0 7 * * * rsync -aPvu /home/backups/ remote@backupserver.com:~/myserverbackups/
+
+# Delete backups older than 60 days
+0 6 * * * find /home/backups/ -type f -name "*.tar.bz" -mtime +60 -delete

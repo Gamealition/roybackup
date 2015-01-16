@@ -1,55 +1,57 @@
-This is a simple backup script for a few servers I have administered. Originally two files, it is now combined into one that uses "targets" to decide what to backup. Some target uses an exclusion file.
+This is a collection of simple backup scripts for a few servers I have administered. Some use exclusion files to filter what to backup.
 
 # Installation
 
-1. `apt-get install tar pv bzip2 coreutils` or distrobution equivalent
+1. `apt-get install tar pv bzip2 coreutils` or distribution equivalent
 2. Clone this repository into any directory
 3. Check the `*.exclude` files and ensure the patterns are not excluding anything you want
-4. `chmod +x roybackup`
+4. `chmod +x *.sh`
 
 # Usage
 
 ```shell
 # For system backups
-roybackup sys
+sys.sh
 
 # For home directory/user data backups
-roybackup home
+home.sh username
 
 # For MySQL data backups
-roybackup mysql
-
-# To check the size and destination of the backup without doing any actual backing up
-roybackup --dry sys
-roybackup --dry home
+mysql.sh database
 ```
 
 ## crontab
 ```shell
 # Every three days at 3 AM
-0  3 */3 * * /home/user/roybackup sys
-# Every three days at 3:15 AM
-15 3 */3 * * /home/user/roybackup home
-# Every day at 3:30 AM
-30 3 * * * /home/user/roybackup mysql
+0  3 */3 * * /home/user/roybackup/sys.sh
+# Variable times between 03:15 and 03:45
+15 3 */3 * * /home/user/roybackup/home.sh vanderprot
+30 3 *   * * /home/user/roybackup/home.sh ircd
+45 3 *   * * /home/user/roybackup/home.sh www-data
+# Variable times between 03:30 and 03:36
+30 3 *   * * /home/user/roybackup/mysql.sh information_schema
+32 3 *   * * /home/user/roybackup/mysql.sh performance_schema
+34 3 *   * * /home/user/roybackup/mysql.sh forums
+36 3 *   * * /home/user/roybackup/mysql.sh minecraft
 ```
 
 # Targets
 
-## `sys`
+## `sys.sh`
 
-The `sys` target is for system files from the `/` root. This includes `/etc /var /usr` (etc.) but **excludes** transient directories such as `/tmp /media /sys` (etc.) and also **excludes** directories used by the `home` target such as `/home /srv`.
+The `sys.sh` target is for system files from the `/` root. This includes `/etc /var /usr` (etc.) but **excludes** transient directories such as `/tmp /media /sys` (etc.) and also **excludes** the `/home` directory.
 
 ## `home`
-The `home` target is for user files which may be gigabytes to terabytes larger than the system backup. This is set to the `/home` directory by default and **excludes** all kinds of transient files, including but not limited to:
+
+The `home.sh` target is for user files which may be gigabytes to terabytes larger than the system backup. This requires the username of the home directory to backup and **excludes** all kinds of transient files, including but not limited to:
 
 * Minecraft Dynmap tiles
 * Source engine maps and packages
 
 ***Note that some servers, by convention, store this kind of data under different directories (e.g. /srv).***
 
-## `mysql`
-This uses `mysqldump` to take and gzip a dump of all MySQL databases on the system's installation. This target requires the use of a `.cnf` file that has the password for the MySQL user `root`, in order to perform the dumps. See http://dev.mysql.com/doc/refman/5.1/en/password-security-user.html for more information.
+## `mysql.sh`
+This uses `mysqldump` to take and bzip2 a dump of given MySQL databases on the system's installation. This target requires the use of a `.cnf` file that has the password for the MySQL user `root`, in order to perform the dumps. See http://dev.mysql.com/doc/refman/5.1/en/password-security-user.html for more information.
 
 # Exclusions
 
