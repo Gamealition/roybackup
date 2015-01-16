@@ -1,8 +1,12 @@
 /backup
+/bin
 /dev
 /home
 /srv
 /lost+found
+/lib
+/lib32
+/lib64
 /media
 /mig
 /mnt
@@ -10,6 +14,11 @@
 /run
 /sys
 /tmp
+/usr/bin
+/usr/include
+/usr/lib
+/usr/sbin
+/usr/share
 
 *.log
 *.log.*
