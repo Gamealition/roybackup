@@ -14,6 +14,18 @@ ROYBACKUP="/usr/local/roybackup"
 5  4 */4 * * ${ROYBACKUP}/mysql.sh prism
 10 4 */4 * * ${ROYBACKUP}/mysql.sh prism_creative
 
+# System backups
+20 4 */3 * * ${ROYBACKUP}/sys.sh
+
+# Home backups
+30 4 */7 * * ${ROYBACKUP}/home.sh usera
+32 4 */7 * * ${ROYBACKUP}/home.sh userb
+34 4 */7 * * ${ROYBACKUP}/home.sh userc
+36 4 */7 * * ${ROYBACKUP}/home.sh userd
+38 4 */7 * * ${ROYBACKUP}/home.sh sysuser
+40 4 */3 * * ${ROYBACKUP}/home.sh www-data
+
+
 # rsync backups to off-site server
 0 7 * * * rsync -aPvu /home/backups/ remote@backupserver.com:~/myserverbackups/
 
