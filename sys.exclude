@@ -19,8 +19,10 @@
 /usr/lib
 /usr/sbin
 /usr/share
+/var/lib/apt
+/var/lib/dpkg
+/var/lib/ghostscript
 /var/lib/mysql
-var/lib/apt
 
 *.log
 *.log.*
