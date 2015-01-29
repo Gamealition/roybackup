@@ -6,6 +6,9 @@
 *.vpk
 world-*.zip
 
+.m2/
+.m2/*
+*/.m2/*
 */*-backup/*
 */*-backups/*
 */backup/*
