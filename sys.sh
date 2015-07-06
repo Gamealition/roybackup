@@ -4,7 +4,7 @@
 # CONFIGURATION:
 
 # Where backups are to be kept
-BACKUPDIR=/home/backups
+BACKUPDIR=/home/backups/sys
 EXCLUDE=sys.exclude
 
 # CONSTANTS:

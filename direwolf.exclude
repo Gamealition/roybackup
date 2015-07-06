@@ -1,31 +1,37 @@
+*/world/DIM*/*
+
 *.log
 *.log.*
 *.tar.gz
 
 *.bsp
 *.vpk
-steamclient.so
+world-*.zip
 
-*/appcache/*
+.m2/
+.m2/*
+*/.m2/*
 */*-backup/*
 */*-backups/*
 */backup/*
 */Backup/*
 */backups/*
 */Backups/*
+*/cache/*
+*/caches/*
+*/crash/*
 */directx_installer/*
 */dynmap/web/tiles/*
+*/libraries/*
 */log/*
 */Log/*
 */logs/*
 */Logs/*
+*/multicraft/*
 */node_modules/*
 */temp/*
 */tmp/*
-*/twit-mirror/*
 
-*/arkdedicated/Engine/*
-*/arkdedicated/linux64/*
-*/arkdedicated/ShooterGame/Content/*
-*/arkdedicated/ShooterGame/Binaries/*
-Steam/*
+Survival/resource/*
+Survival/resource_nether/*
+Survival/resource_the_end/*

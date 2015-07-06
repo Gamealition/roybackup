@@ -26,9 +26,11 @@ ROYBACKUP="/usr/local/roybackup"
 40 4 */3 * * ${ROYBACKUP}/home.sh www-data
 
 # Minecraft backups
-0  5 * * * ${ROYBACKUP}/minecraft.sh Survival
-10 5 * * * ${ROYBACKUP}/minecraft.sh Creative
-20 5 * * * ${ROYBACKUP}/minecraft.sh Direwolf20
+0  5   *   * * ${ROYBACKUP}/minecraft.sh Survival
+# Full FTB backup every 4 days
+20 5   */4 * * ${ROYBACKUP}/minecraft.sh Direwolf20
+# Backup only config files and dimension 0 every 6 hours
+0  */6 *   * * ${ROYBACKUP}/minecraft.sh Direwolf20 /home/minecraft/direwolf.exclude
 
 # rsync backups to off-site server
 0 7 * * * rsync -aPvu /home/backups/ remote@backupserver.com:~/myserverbackups/

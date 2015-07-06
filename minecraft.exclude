@@ -29,3 +29,7 @@ world-*.zip
 */node_modules/*
 */temp/*
 */tmp/*
+
+Survival/resource/*
+Survival/resource_nether/*
+Survival/resource_the_end/*

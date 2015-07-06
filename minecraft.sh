@@ -5,7 +5,7 @@
 
 # Where backups are to be kept
 BACKUPDIR=/home/backups/minecraft
-EXCLUDE=minecraft.exclude
+EXCLUDE=${2:-minecraft.exclude}
 
 # CONSTANTS:
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -13,6 +13,7 @@ PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 cd $DIR
 
 # SCRIPT:
+echo -e "[MINECRAFT] Using exclude file $EXCLUDE"
 echo -e "[MINECRAFT] Calculating backup size..."
 
 SIZE=`du -sm --exclude-from=$EXCLUDE /home/minecraft/$1 2> /dev/null | cut -f 1`
