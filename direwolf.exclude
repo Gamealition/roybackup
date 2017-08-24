@@ -8,8 +8,8 @@
 *.vpk
 world-*.zip
 
-.m2/
-.m2/*
+*/.git/*
+*/.gradle/*
 */.m2/*
 */*-backup/*
 */*-backups/*
@@ -27,11 +27,8 @@ world-*.zip
 */Log/*
 */logs/*
 */Logs/*
+*/mods/*
 */multicraft/*
 */node_modules/*
 */temp/*
 */tmp/*
-
-Survival/resource/*
-Survival/resource_nether/*
-Survival/resource_the_end/*
