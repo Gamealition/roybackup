@@ -26,5 +26,5 @@ BACKUPPATH=${BACKUPDIR}/sys-${TIMESTAMP}.tar.bz
 
 echo -e "[SYS] Performing ${SIZE}MB / (system) backup to ${BACKUPPATH}..."
 tar --exclude-from=$EXCLUDE \
-    -cf - / | pv -p -e -r -b -s ${SIZE}m | bzip2 > $BACKUPPATH
+    -cf - / | pv -p -e -r -b -s ${SIZE}m | lbzip2 -n 6 > $BACKUPPATH
 echo -e "[SYS] Finished backup to ${BACKUPPATH}"

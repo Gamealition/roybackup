@@ -26,5 +26,5 @@ BACKUPPATH=${BACKUPDIR}/$1-${TIMESTAMP}.tar.bz
 
 echo -e "[HOME] Performing ${SIZE}MB /home/$1 backup to ${BACKUPPATH}..."
 tar --exclude-from=$EXCLUDE \
-    -cf - /home/$1 | pv -p -e -r -b -s ${SIZE}m | bzip2 > $BACKUPPATH
+    -cf - /home/$1 | pv -p -e -r -b -s ${SIZE}m | lbzip2 -n 6 > $BACKUPPATH
 echo -e "[HOME] Finished backup to ${BACKUPPATH}"

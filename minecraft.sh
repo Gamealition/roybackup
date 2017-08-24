@@ -22,5 +22,5 @@ BACKUPPATH=${BACKUPDIR}/$1-${TIMESTAMP}.tar.bz
 
 echo -e "[MINECRAFT] Performing ${SIZE}MB /home/minecraft/$1 backup to ${BACKUPPATH}..."
 tar --exclude-from=$EXCLUDE \
-    -cf - /home/minecraft/$1 | pv -p -e -r -b -s ${SIZE}m | bzip2 > $BACKUPPATH
+    -cf - /home/minecraft/$1 | pv -p -e -r -b -s ${SIZE}m | lbzip2 -n 6 > $BACKUPPATH
 echo -e "[MINECRAFT] Finished backup to ${BACKUPPATH}"

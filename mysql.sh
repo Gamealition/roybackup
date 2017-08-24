@@ -23,4 +23,4 @@ BACKUPPATH=${BACKUPDIR}/${1}-${TIMESTAMP}.sql.bz
 
 echo -e "[MYSQL] Performing backup of database $1 to $BACKUPPATH"
 mysqldump --defaults-file="$MYSQL_CNF" --add-drop-database --single-transaction --extended-insert \
-          -u root $1 | bzip2  > $BACKUPPATH
+          -u root $1 | lbzip2 -n 6 > $BACKUPPATH
