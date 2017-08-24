@@ -1,9 +1,11 @@
 /backup
 /bin
+/boot
 /dev
 /home
 /srv
 /lost+found
+/lib
 /lib32
 /lib64
 /media
@@ -19,15 +21,23 @@
 /usr/lib
 /usr/sbin
 /usr/share
+/usr/src
 /var/lib/apt
+/var/lib/aspell
 /var/lib/dpkg
 /var/lib/ghostscript
+/var/lib/mlocate
 /var/lib/mysql
+/var/lib/smartmontools
 
 *.log
 *.log.*
 *.tar.gz
 
+*/.git/*
+*/.npm/*
+*/.gradle/*
+*/.m2/*
 */*-backup/*
 */*-backups/*
 */backup/*

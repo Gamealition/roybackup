@@ -1,11 +1,24 @@
+# Log files
 *.log
 *.log.*
-*.tar.gz
 
+# Compressed files
+*.tar.gz
+*.tar.bz
+
+# Steam game and client data
+# Excluded because it is redownloadable
 *.bsp
 *.vpk
+*.bin
 steamclient.so
+Steam/*
 
+# Cache, logging and version control directories
+*/.git/*
+*/.npm/*
+*/.m2/*
+*/.gradle/*
 */appcache/*
 */*-backup/*
 */*-backups/*
@@ -13,8 +26,6 @@ steamclient.so
 */Backup/*
 */backups/*
 */Backups/*
-*/directx_installer/*
-*/dynmap/web/tiles/*
 */log/*
 */Log/*
 */logs/*
@@ -22,10 +33,26 @@ steamclient.so
 */node_modules/*
 */temp/*
 */tmp/*
+
+# TWiTCraft mirror
+# Excluded as we have a separate backup elsewhere
 */twit-mirror/*
 
+# Dynmap tiles
+*/dynmap/web/tiles/*
+
+# Ark content files and directories
 */arkdedicated/Engine/*
 */arkdedicated/linux64/*
 */arkdedicated/ShooterGame/Content/*
+*/arkdedicated/ShooterGame/ContentStreamers/*
 */arkdedicated/ShooterGame/Binaries/*
-Steam/*
+*/directx_installer/*
+
+# Factorio binary
+# Excluded due to large size
+*/bin/x64/factorio
+
+# VanDerProtofsky's web directory
+# Excluded because it is personal and expendable data
+home/vanderprot/www/*
